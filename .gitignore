@@ -2,3 +2,4 @@ login.json
 __pycache__
 venv
 geckodriver.log
+.vscode
