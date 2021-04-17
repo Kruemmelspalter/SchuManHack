@@ -7,6 +7,8 @@ class Interface:
     def __init__(self, start_screen, *args):
         self.stdscr = curses.initscr()
 
+        curses.start_color()
+
         curses.noecho()
         curses.cbreak()
         self.stdscr.keypad(True)
@@ -60,6 +62,12 @@ class InterfaceScreen:
         elif key == curses.KEY_LEFT:
             self.interface.go_back()
 
+    def choice_render(self, window, index, selected, options=0):
+        title = self.title if hasattr(
+            self, 'title') else type(choice).__name__
+        window.addstr(index, 0, title,
+                      (curses.A_REVERSE if selected == index else 0) | options)
+
 
 class ChoiceScreen(InterfaceScreen):
     def __init__(self, interface, choices: list):
@@ -69,11 +77,7 @@ class ChoiceScreen(InterfaceScreen):
 
     def render(self, window: curses.window):
         for i, choice in enumerate(self.choices):
-            title = choice.title if hasattr(
-                choice, 'title') else type(choice).__name__
-
-            window.addstr(i, 0, title, curses.A_REVERSE if i ==
-                          self.selected else 0)
+            choice.choice_render(window, i, self.selected, 0)
 
     def handle_key(self, key):
         super().handle_key(key)
@@ -91,4 +95,3 @@ class ChoiceScreen(InterfaceScreen):
 
         elif key == '\n' or key == curses.KEY_RIGHT:
             self.interface.go_to_screen(self.choices[self.selected])
-
