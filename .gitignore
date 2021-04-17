@@ -3,3 +3,5 @@ __pycache__
 venv
 geckodriver.log
 .vscode
+test.py
+

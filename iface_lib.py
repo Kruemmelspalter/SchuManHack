@@ -95,3 +95,25 @@ class ChoiceScreen(InterfaceScreen):
 
         elif key == '\n' or key == curses.KEY_RIGHT:
             self.interface.go_to_screen(self.choices[self.selected])
+
+
+class ScrollScreen(InterfaceScreen):
+    def __init__(self, interface, text):
+        self.text = text
+        self.top_line = 0
+        super().__init__(interface)
+
+    def render(self, window):
+        text = '\n'.join(self.text.split('\n')[self.top_line:
+                                          self.top_line+self.interface.stdscr.getmaxyx()[0]])
+        window.addstr(0, 0, text)
+    
+    def handle_key(self, key):
+        if key == curses.KEY_DOWN:
+            self.top_line += 1
+            self.top_line %= len(self.text.split('\n'))
+        elif key == curses.KEY_UP:
+            self.top_line -= 1
+            if self.top_line < 0:
+                self.top_line = len(self.text.split('\n'))
+        super().handle_key(key)
