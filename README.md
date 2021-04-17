@@ -11,7 +11,7 @@ A better interface and automatisation library for the german school tool [Schulm
 * `pip install -r requirements.txt`
 * On Windows, `pip install windows-curses`
 * Install Firefox
-* Install geckodriver to PATH
+* Download [geckodriver](https://github.com/mozilla/geckodriver) and extract it to the directory
 
 
 ## Run
