@@ -9,6 +9,10 @@ A better interface and automatisation library for the german school tool [Schulm
 
 ### Install Dependencies
 * `pip install -r requirements.txt`
+* On Windows, `pip install windows-curses`
+* Install Firefox
+* Install geckodriver to PATH
+
 
 ## Run
 * `python iface.py`

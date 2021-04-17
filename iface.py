@@ -27,7 +27,6 @@ class LoginScreen(iface_lib.InterfaceScreen):
             window.addstr(4, 0, "Login failed", curses.A_BLINK)
 
     def handle_key(self, key):
-        super().handle_key(key)
         if key == curses.KEY_DOWN:
             if self.selected < 2:
                 self.selected += 1
@@ -55,11 +54,14 @@ class LoginScreen(iface_lib.InterfaceScreen):
             elif login_state == 1:
                 self.failed_login = True
 
-        elif isinstance(key, str):
+        elif isinstance(key, str) and self.selected != 2:
             if self.selected == 0:
                 self.email_input += key
             elif self.selected == 1:
                 self.password_input += key
+        
+        elif key == 'q' and self.selected == 2:
+            self.interface.close()
 
 
 class MainScreen(iface_lib.ChoiceScreen):
