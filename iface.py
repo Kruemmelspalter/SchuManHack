@@ -120,10 +120,17 @@ class UnitScreen(iface_lib.InterfaceScreen):
         if self.text is None:
             self.text = self.interface.driver.get_unit(self.subject, self.identifier)
         window.addstr(self.text)
+    
+    def choice_render(self, window, index, selected, options):
+        if not self.done:
+            options |= curses.color_pair(1)
+        super().choice_render(window, index, selected, options)
+
 
 class SchuManInterface(iface_lib.Interface):
     def __init__(self):
         super().__init__(LoginScreen)
+        curses.init_pair(1, curses.COLOR_BLUE, curses.COLOR_BLACK)
 
         self.driver = scraping.SchuManDriver()
 
