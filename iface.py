@@ -109,19 +109,18 @@ class SubjectScreen(iface_lib.ChoiceScreen):
         super().render(window)
 
 
-class UnitScreen(iface_lib.InterfaceScreen):
+class UnitScreen(iface_lib.ScrollScreen):
     def __init__(self, interface, subject, identifier, title, done):
         self.title = title
         self.done = done
-        self.text = None
         self.subject = subject
         self.identifier = identifier
         super().__init__(interface)
 
     def render(self, window):
-        if self.text is None:
+        if self.text == "":
             self.text = self.interface.driver.get_unit(self.subject, self.identifier)
-        window.addstr(self.text)
+        super().render(window)
     
     def choice_render(self, window, index, selected, options):
         if not self.done:

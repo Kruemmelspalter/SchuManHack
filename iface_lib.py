@@ -1,6 +1,8 @@
 import curses
 import curses.ascii
 import queue
+import textwrap
+import time  # debug
 
 
 class Interface:
@@ -98,16 +100,20 @@ class ChoiceScreen(InterfaceScreen):
 
 
 class ScrollScreen(InterfaceScreen):
-    def __init__(self, interface, text):
+    def __init__(self, interface, text=""):
         self.text = text
         self.top_line = 0
         super().__init__(interface)
 
     def render(self, window):
-        text = '\n'.join(self.text.split('\n')[self.top_line:
+        text = textwrap.fill(self.text.replace('\n', '\x00'), self.interface.stdscr.getmaxyx()[
+                             1]-1).replace('   ', '\n').replace('\x00', '\n')
+
+        text = '\n'.join(text.split('\n')[self.top_line:
                                           self.top_line+self.interface.stdscr.getmaxyx()[0]])
+
         window.addstr(0, 0, text)
-    
+
     def handle_key(self, key):
         if key == curses.KEY_DOWN:
             self.top_line += 1
