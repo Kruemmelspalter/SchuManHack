@@ -1,8 +1,6 @@
 import curses
-import curses.ascii
 import queue
 import textwrap
-import time  # debug
 
 
 class Interface:

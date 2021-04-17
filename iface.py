@@ -2,8 +2,6 @@ import iface_lib
 import scraping
 
 import curses
-import json
-import time
 
 
 class LoginScreen(iface_lib.InterfaceScreen):
