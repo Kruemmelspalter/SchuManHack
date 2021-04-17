@@ -118,25 +118,9 @@ class SchuManDriver:
 
         unit_texts = wait.until(expected_conditions.presence_of_all_elements_located(
             (By.XPATH, '/html/body/div[2]/div/ui-view/ui-view/ui-view/ui-view/div/div/div/div[2]/view-unit-item')))
+        
+        result = '\n'.join([unit_text.text for unit_text in unit_texts])
 
-        return '\n'.join([unit_text.text for unit_text in unit_texts])
-        # /html/body/div[2]/div/ui-view/ui-view/ui-view/ui-view/div/div/div/div[2]/view-unit-item
+        self.driver.get("about:blank")
 
-    # TODO
-    # - get unit
-    # - get schedule
-    # - vconf join?
-    # - messages?
-
-
-if __name__ == '__main__':
-    import json
-
-    with open('login.json') as f:
-        login = json.load(f)
-    driver = SchuManDriver(True)
-    driver.login(login['email'], login['password'])
-    subjects = driver.get_subjects()
-    print(subjects)
-    print(driver.get_units(list(subjects)[9]))
-    driver.driver.quit()
+        return result
