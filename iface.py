@@ -35,7 +35,7 @@ class LoginScreen(iface_lib.InterfaceScreen):
                 self.selected -= 1
             else:
                 self.selected = 2
-        elif key == '\x7F':
+        elif key in ('\x7F','\x08'):
             if self.selected == 0:
                 self.email_input = self.email_input[:-1]
             elif self.selected == 1:
